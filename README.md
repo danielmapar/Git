@@ -11,11 +11,11 @@
 * Master branch
   * Time-line that contains your changes
 
-![The Git Master Branch](./branches-in-git.png)
+![The Git Master Branch](./images/branches-in-git.png)
 
-![The Git Repository](./the-git-repository.png)
+![The Git Repository](./images/the-git-repository.png)
 
-![The Git Workflow](./the-git-workflow.png)
+![The Git Workflow](./images/the-git-workflow.png)
 
 
 ## Quick Start: Starting with GitHub and Project Setup
@@ -36,19 +36,19 @@
   * ```git status```: Git will let us know that we are in the ```master``` branch, which is the default branch by convention
     * Also, Git already make a link for us to the remote repository ```origin/master```. It is called ```origin``` and it points to the GitHub repository.
   * We use the ```git status``` to see if there are changes done to the local repository.
-  ![The Git Workflow-2](./the-git-workflow-2.png)
+  ![The Git Workflow-2](./images/the-git-workflow-2.png)
   * Now that we have a local repository, lets create a new file: ```echo "Test Quick Start demo" >> start.txt```
   * ```ls```: Now we can see the new file inside our repository  
   * ```cat start.txt```: Shows the content of the file
   * ```git status```: Git will point out that we have an untracked file, that means that this file is in our Working directory.
   * To add the file to the Staging area, we need to tell Git to do it: ```git add start.txt```
   * ```git status```: Now git will show our ```start.txt``` file as "Changes to be committed"
-  ![Changes to be Committed](./changes-to-be-committed.png)
-  ![Staging area](./staging-area.png)
+  ![Changes to be Committed](./images/changes-to-be-committed.png)
+  ![Staging area](./images/staging-area.png)
   * ```git commit -m "Adding start text file"```: Lets commit this file to the local repository
-  ![Commit changes](./commit-changes.png)
+  ![Commit changes](./images/commit-changes.png)
   * Now Git is telling us that our local branch is ahead of our remote one located in the GitHub repository. Also, that our working directory is clean
-  ![In the Repository](./in-the-repository.png)
+  ![In the Repository](./images/in-the-repository.png)
   * IMPORTANT: Our file is not yet on GitHub (our remote repository)
   * ```git push origin master```: We are telling git to push to our remote repository ```origin``` at a branch called ```master```
 
@@ -72,14 +72,14 @@
 
 * ```git init fresh-project```: Creates a new local repository within the ```fresh-project``` folder
 * ```ls -al```: `-a` list all files and folders, and `-l` to list in the file format
-![Git Init](./git-init.png)
+![Git Init](./images/git-init.png)
 * `.git`: Where the actual git repository lives
 * `git status`: That will tell us that we are in the `master` branch, which is the default one
 * ```atom hipster.txt```: Lets create a new file inside the repository
 * ```git status```: Git tells me that we have some untracked files. Having said that, for Git to start tracking this file (staging area), we need to run a ```git add hipster.txt```
   * This file is not in the staging area
 * ```git commit```: Git will invoke our default editor in order for us to write our commit message
-![Root commit](./root-commit.png)
+![Root commit](./images/root-commit.png)
   * Git will let us know this was our first commit for this repository aka ```root-commit```
 * ```rm -rf fresh-project```: Lets delete the git repository
 
@@ -120,16 +120,16 @@
 ## Tracked Files
 
 * ```atom ~/.gitconfig```: Here you are able to change your user specific git settings
-* ```git commit -am "Adding more ipsum text"```: This command will let us add and create a commit at the same time
+* ```git commit -am "Adding more ipsum text"```: This command will let us move our files to the Staging Area and create a commit at the same time
   * ```-a``` / ```--all```: Tell the command to automatically stage files that have been modified and deleted, but new files you have not told Git about are not affected.
-![Tracked file](./tracked_file.png)
+![Tracked file](./images/tracked_file.png)
 * A tracked file is any file that git is aware of and tracking actively.
   * Any file that has already been committed to the git repository, or any file that has been added to the git index or the git staging area
   * ```git ls-files```: This gives me a list of all the files that git is tracking in the current repository
 * Lets say I create a new file inside a repository by running ```touch new_file```.
 * ```git ls-files```: You will notice the file is not listed, because this file still in the Working Directory as a new file
 * By running ```git add new_file``` git will add this to the git index (Staging Area) and we should be able to track it with ```git ls-files```
-![Tracked file 2](./tracked_file_2.png)
+![Tracked file 2](./images/tracked_file_2.png)
 * IMPORTANT: In case you create a new file, executes ```git add new_file``` and edit this file afterwards, the new file changes will be on the Working Directory, and the previous ones will be in the Staging Area
 
 ## Recursive Add
@@ -153,7 +153,7 @@
 * ```git mv level1.txt level2.txt```: Git will rename the file at the OS level, and if we do a ```git status``` git has staged the fact the rename is taking place.
 * ```git commit -m "Renaming level1 file"```
 * ```mv```: If you rename using a bash command, git sees that as two operations: deletes the file and creates a new file
-![Rename File](./rename_file.png)
+![Rename File](./images/rename_file.png)
 * ```git add -A```: Recursively add any changes, but will also update any files that have been renamed, moved, or deleted.
   * ```git status```: Git sees we renamed the file
   * In case you need to add just a specific file run: ```git add level1``` and ```git add -u``` to let git know we are renaming a file
@@ -174,7 +174,7 @@
   * ```--oneline```: Compress our entries in one line
   * ```--graph```: ASC graph depicting the branching graph
   * ```--decorate```: Will add anything that annotates our commits
-  ![Git log](./git_log.png)
+  ![Git log](./images/git_log.png)
 * ```git log -- file.txt```: Commits related to file.txt
 * ```git show $commitid```: Shows commit details
 
@@ -186,7 +186,7 @@
 ## Ignore Files
 
 * ```.gitignore```: Create a file to list banned files
-![Git ignore](./git_ignore.png)
+![Git ignore](./images/git_ignore.png)
 
 ## Merging Tools
 
@@ -204,11 +204,65 @@
 ## Comparisons
 
 * Working Dir vs Staging Area: ```git diff```
-![Git Diff](./git_diff.png)
+![Git Diff](./images/git_diff.png)
   * ```git difftool```: In case you have a visual diff tool configured (like P4)
-  ![Git Diff Tool](./git_difftool.png)
-  ![Git Diff Tool2](./git_difftool2.png)
+  ![Git Diff Tool](./images/git_difftool.png)
+  ![Git Diff Tool2](./images/git_difftool2.png)
 
 * Working Dir vs Local Repository (last commit): ```git diff HEAD```
 
 * Staging Dir vs Local Repository (last commit): ```git diff --staged HEAD```
+
+* Diff an specific file: ```git diff -- README.html```
+
+* Diff commits:
+  * List of commits: ```git log --oneline```
+
+  * ```git diff e9dd882 c0e044f```
+
+  * ```git diff e9dd882 HEAD```: HEAD points to the last commit in the current branch
+
+  * ```git diff HEAD HEAD^```: This compares HEAD and HEAD-1
+
+* Local Repository vs Remote Repository: ```git diff master origin/master```
+
+## Branching and Merging
+
+* ```git branch -a```: We will lost both the local and the remote branches
+![Git List Branches](./images/branches-list-remote.png)
+
+* ```git branch mynewbranch```: Creates a new branch, but keeps us in out current working branch (lets say ```master```)
+
+* ```git checkout mynewbranch```: This allows us to move to the mynewbranch branch
+
+  * ```git log --oneline --decorate```: We will notice that this branch is associated with
+
+* ```git branch -m mynewbranch newbranch```: Renaming branch
+
+* ```git branch -d newbranch```: Delete branch
+
+* ```git checkout -b title-change```: Creates a branch called title-change and moves to the branch
+
+* ```git checkout master && git merge title-change```: Move to the master branch and merge ```master``` with ```title-change```
+
+  * Fast-forward merge
+  ![Fast Forward](./images/fast-forward.png)
+  ![Fast Forward](./images/fast-forward-2.png)
+
+* ```git merge title-change --no-ff```: We will merge but we want to preserve the fact that we branched off.
+
+![No Fast Forward](./images/no-fast-forward.png)
+
+![No Fast Forward2](./images/no-fast-forward-2.png)
+
+* The merges just described don't take in account conflicts. We are supposing that the master branch has not changed, and the ```title-change``` branch carries the changes. However, lets consider that both branches have unique commits that are not present in each other.
+
+  * ```git merge title-change -m "Merging changes from title-change"```: This merge command will create a commit with the changes necessary to merge both branches (since they are different)
+
+* Sometimes git will be unable to automatically merge and solve a conflict. On that note, you will be responsible for fixing the conflict
+
+![Conflict](./images/conflict.png)
+
+* ```git mergetool```: This tool will help us visually solve our merge conflict
+
+![P4 Merge](./images/merge-p4.png)
