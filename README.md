@@ -46,6 +46,7 @@
   ![Changes to be Committed](./images/changes-to-be-committed.png)
   ![Staging area](./images/staging-area.png)
   * ```git commit -m "Adding start text file"```: Lets commit this file to the local repository
+    * ```git commit --amend```: Lets us update the commit message
   ![Commit changes](./images/commit-changes.png)
   * Now Git is telling us that our local branch is ahead of our remote one located in the GitHub repository. Also, that our working directory is clean
   ![In the Repository](./images/in-the-repository.png)
@@ -145,6 +146,8 @@
 * ```echo "321" > level1.txt```: Change file content
 * ```git add level1.txt```: Add a file to the Staging Area
 * ```git reset HEAD level1.txt```: That will unstage the file, sending it back to the Working Directory
+  * Make your current branch (typically master) back to point at <SOME-COMMIT>.
+  * Then make the files in your working tree and the index ("staging area") the same as the versions committed in <SOME-COMMIT>.
 * ```git checkout -- level1.txt```: That will undo any changes done on the Working Directory for this file
 
 ## Renaming Files
@@ -248,12 +251,11 @@
   * Fast-forward merge
   ![Fast Forward](./images/fast-forward.png)
   ![Fast Forward](./images/fast-forward-2.png)
+  ![Fast Forward](./images/fast-forward-3.png)
 
-* ```git merge title-change --no-ff```: We will merge but we want to preserve the fact that we branched off.
-
-![No Fast Forward](./images/no-fast-forward.png)
-
-![No Fast Forward2](./images/no-fast-forward-2.png)
+  * ```git merge title-change --no-ff```: We will merge but we want to preserve the fact that we branched off.
+  ![No Fast Forward](./images/no-fast-forward.png)
+  ![No Fast Forward2](./images/no-fast-forward-2.png)
 
 * The merges just described don't take in account conflicts. We are supposing that the master branch has not changed, and the ```title-change``` branch carries the changes. However, lets consider that both branches have unique commits that are not present in each other.
 
@@ -264,5 +266,141 @@
 ![Conflict](./images/conflict.png)
 
 * ```git mergetool```: This tool will help us visually solve our merge conflict
-
 ![P4 Merge](./images/merge-p4.png)
+
+## Rebasing
+
+* ```git checkout -b myfeature```: Create a new branch based on ```master```
+  * ```touch newfile && echo "123" > newfile```
+  * ```git add --all```
+  * ```git commit -m "New file"```
+* ```git checkout master```: Lets go back to master and make some changes to it
+  * ```touch newfile2 && echo "321" > newfile```
+  * ```git add --all```
+  * ```git commit -m "New file 2"```
+
+![Rebase](./images/rebase-start.png)
+
+* ```git rebase master```: Here we define in which branch we want to rebase from. Rebasing here is like copying the work you have in your branch and merging with the ```master``` branch.
+
+![Rebase2](./images/rebase.png)
+![Rebase3](./images/rebase-rewind.png)
+![Rebase3](./images/rebase-apply.png)
+
+* We basically rewinded our ```HEAD``` from ```myfeature``` to point back to where masters branch ```HEAD``` is. After that, it will re-apply all changes made inside ```myfeature```
+
+* In case you ```rebase``` conflicting branches, you can abort the rebase by doing ```git rebase --abort```
+
+  * You can also solve the merge conflicts by doing ```git mergetool``` and ```git rebase --continue```
+
+### Rebase from remote
+
+![Rebase Remote](./images/rebase-remote.png)
+
+* ```git fetch origin master```: It is a non destructive command that simple updates the references between the remote repository and  local (origin/master)
+
+* ```git status```: Local master (master) and remote master (origin/master) diverge
+
+* ```git pull --rebase origin master```: Now we have rebased our changes from Github to our local repository
+
+## Stash
+
+* ```atom test && echo "123" > test```
+
+* ```git stash```: This will save the Working Directory and remove the changes so you can work on something else. This command ignore untracked files (new files for example)
+  * To get untracked files you need to run ```git stash -u```
+
+* ```git status```: Nothing to commits
+
+* ```atom test2 && echo "321" > test2```
+
+* ```git add --all && git commit -m "New file"```
+
+* ```git status```: Working directory is clean again
+
+* ```git stash apply```: It will put back ```test``` to our Working Directory
+
+* ```git stash list```: Will show the stash as part of our list
+![Stash List](./images/stash-list.png)
+
+* We can delete delete the last stash by doing ```git stash drop```
+
+* ```git stash apply``` + ```git stash drop``` = ```git stash pop```
+
+### Working with multiple stashes
+
+* ```git stash save "simple changes"```: Saves a stash to the list of stashes
+
+* We can make some more changes and then do: ```git stash save "index changes"``` and ```git stash save "Readme changes"```
+
+* ```git stash list```
+![Stash List 2](./images/stash-list-2.png)
+
+* ```git stash show stash@{1}```
+![Stash Show](./images/stash-show.png)
+
+* ```git stash apply stash@{1}```
+![Stash Show](./images/stash-apply-2.png)
+
+* ```git stash drop stash@{1}```
+
+* ```git stash list```
+
+* ```git stash clear```: Empty list of stashes
+
+* IMPORTANT: You can move files between branches by using stashes.
+
+## Tagging
+
+* Tags are just labels that will help us organize our commits.
+
+* ```git tag myTag```: Lightweight tag
+
+* ```git tag --list```
+![Git List Tag](./images/tag-list.png)
+
+* ```git show myTag```: Shows the commit associated with that tag
+![Git Show Tag](./images/tag-show.png)
+
+* ```git tag --delete myTag```
+
+### Annotated Tag
+
+* ```git tag -a v1.0```: Tags are used to label major milestones in our source code
+  * ```-a```: annotated tag
+  * It will ask for notes
+
+* ```git show v1.0```
+![Git Show Annotated Tag](./images/tag-show-annotated.png)
+
+### Comparing Tag
+
+* Make some commits
+
+* ```git tag v1.1 -m "Release 1.1"```
+
+* Make some commits
+
+* ```git tag v1.2 -m "Release 1.2"```
+
+* ```git diff v1.1 v1.2``` or ```git difftool v1.1 v1.2```
+
+* ```git tag -a v0.9-beta 96ef75b```: Tagging specific commit
+
+* ```git tag -a v0.9-beta -f 76ef75b```: Force the tag to point to a new commit
+
+* ```git push origin v0.9-beta```: Pushing a tag to our remote repository
+
+* ```git push origin master --tags```: That will push everything to master + all of our tags
+
+* ```git push origin :v0.9-beta```: Push nothing to this tag (this will delete it from remote)
+
+## Bonus
+
+* How to reset to a previous commit (-1): ```git reset HEAD^1``` or ```git reset e393216``` or ```git reset HEAD@{3}```
+![Git Reset](./images/reset.png)
+
+* ```git reflog```: A log of all actions we have done
+![Git Reflog](./images/reflog.png)
+
+* ```git push <remote_name> --delete <branch_name>```: Remove branch remotely 
