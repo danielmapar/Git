@@ -404,3 +404,6 @@
 ![Git Reflog](./images/reflog.png)
 
 * ```git push <remote_name> --delete <branch_name>```: Remove branch remotely 
+
+* ```git checkout --track origin/daves_branch```: Creates a local branch based on remote 
+ * Same as: ```git checkout -b [branch] [remotename]/[branch]```
